@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProxyProof – Bluetooth Attendance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef2f7; --panel:#ffffff; --ink:#132033; --soft:#5a6a80; --line:#d5dde8;
+  --signal:#0a7cff; --signal-soft:#d9eaff; --ok:#11895a; --bad:#c9353b;
+}
+@media (prefers-color-scheme:dark){
+  :root{ color-scheme:dark;
+    --bg:#0f1724; --panel:#172234; --ink:#e6edf7; --soft:#97a6bd; --line:#2a3a52;
+    --signal:#4da3ff; --signal-soft:#16304f; --ok:#3fcf8e; --bad:#ff6f74; }
+}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+h1,h2{font-family:"Bricolage Grotesque",sans-serif;margin:0}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  padding:16px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+header h1{font-size:1.5rem;letter-spacing:-.02em}
+header p{margin:0;color:var(--soft);font-size:.9rem}
+main{max-width:860px;margin:auto;padding:18px;display:grid;gap:16px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+section h2{font-size:1.15rem;margin-bottom:10px}
+input,select,button{font:inherit;padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+button{background:var(--signal);border-color:var(--signal);color:#fff;font-weight:600;cursor:pointer}
+button.quiet{background:transparent;color:var(--ink);border-color:var(--line);font-weight:400}
+button.stop{background:var(--bad);border-color:var(--bad)}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.soft{color:var(--soft);font-size:.9rem}
+.ok{color:var(--ok)} .bad{color:var(--bad)}
+.tag{display:inline-block;padding:3px 9px;border-radius:99px;background:var(--signal-soft);font-size:.82rem}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+th{color:var(--soft);font-weight:600}
+code{font-size:.9em}
+/* the broadcast beacon – the one bold element */
+.beacon{display:flex;align-items:center;gap:22px;padding:14px 0}
+.dot{position:relative;width:54px;height:54px;flex:none;border-radius:50%;background:var(--signal)}
+.dot::before,.dot::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--signal);animation:ping 2s infinite}
+.dot::after{animation-delay:1s}
+@keyframes ping{to{transform:scale(2.3);opacity:0}}
+@media (prefers-reduced-motion:reduce){.dot::before,.dot::after{animation:none}}
+.token{font-family:"Bricolage Grotesque",sans-serif;font-size:2.1rem;font-weight:700;letter-spacing:.06em;word-break:break-all}
+.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}
+.bar div{height:100%;background:var(--signal);transition:width .9s linear}
+.log{font:13px/1.5 ui-monospace,Menlo,monospace;max-height:190px;overflow:auto;background:var(--bg);border-radius:8px;padding:8px;margin-top:10px}
+.big{font-family:"Bricolage Grotesque",sans-serif;font-size:2.4rem;font-weight:700}
+input[type=range]{width:100%;padding:0}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>ProxyProof</h1><p>Attendance that only counts people in the room</p></div>
+  <div id="who" class="row"></div>
+</header>
+<main id="app"></main>
+<script src="app.js"></script>
+</body>
+</html>
